@@ -1,9 +1,14 @@
 const { Sequelize, DataTypes } = require("sequelize");
 
-const sequelize = new Sequelize("said", "root", "", {
-	host: "localhost",
-	dialect: "mysql",
-});
+const sequelize = new Sequelize(
+	"foodly",
+	"root",
+	"votresupermotdepassetrescomplique",
+	{
+		host: "localhost",
+		dialect: "mysql",
+	}
+);
 
 async function test() {
 	try {
