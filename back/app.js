@@ -1,41 +1,43 @@
-const { Sequelize, DataTypes } = require("sequelize");
+const express = require("express");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+const app = express();
+const path = require("path");
+const helmet = require("helmet");
+app.use(helmet());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
-const sequelize = new Sequelize(
-	"foodly",
-	"root",
-	"votresupermotdepassetrescomplique",
-	{
-		host: "localhost",
-		dialect: "mysql",
-	}
+// const commentRoutes = require("./routes/comment");
+// const postRoutes = require("./routes/post");
+const userRoutes = require("./routes/user");
+
+// Gestion des erreurs CORS (accès interdit aux autres serveurs)
+app.use(cors());
+app.use((req, res, next) => {
+	res.setHeader("Access-Control-Allow-Origin", "*");
+	res.setHeader("Access-Control-Allow-Credentials", true);
+	res.setHeader(
+		"Access-Control-Allow-Headers",
+		"Origin, X-Requested-With, Content, Accept, Content-Type, Authorization"
+	);
+	res.setHeader(
+		"Access-Control-Allow-Methods",
+		"GET, POST, PUT, DELETE, PATCH, OPTIONS"
+	);
+	next();
+});
+
+app.use("/images", express.static(path.join(__dirname, "images")));
+
+app.use(
+	bodyParser.urlencoded({
+		extended: true,
+	})
 );
 
-async function test() {
-	try {
-		await sequelize.authenticate();
-		console.log("Connection has been established successfully.");
-		await User.sync({ force: true });
-		await User.create({ firstName: "Jane", lastName: "Doe" });
-	} catch (error) {
-		console.error("Unable to connect to the database:", error);
-	}
-}
-test();
+// app.use("/api/comment", commentRoutes);
+// app.use("/api/post", postRoutes);
+app.use("/api/auth", userRoutes);
 
-const User = sequelize.define(
-	"User",
-	{
-		// Model attributes are defined here
-		firstName: {
-			type: DataTypes.STRING,
-			allowNull: false,
-		},
-		lastName: {
-			type: DataTypes.STRING,
-			// allowNull defaults to true
-		},
-	},
-	{
-		// Other model options go here
-	}
-);
+module.exports = app;
