@@ -1,0 +1,117 @@
+/*///////////////////////////LogIn///////////////*/
+
+.Login {
+	display: flex;
+	flex-direction: column;
+}
+.Login input {
+	width: 200px;
+	height: 30px;
+	margin-top: 5px;
+	border: solid 3px;
+	display: flex;
+	justify-items: center;
+	align-self: center;
+	flex-direction: column;
+}
+
+.Login button {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-self: center;
+	align-items: center;
+	width: 208px;
+	height: 35px;
+	margin-top: 10px;
+	cursor: pointer;
+	background-color: black;
+	border: 0px;
+	color: white;
+}
+
+.Login nav {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-self: center;
+	align-items: center;
+	margin-top: 15px;
+}
+
+.Login nav,
+a {
+	text-decoration: none;
+	color: blue;
+}
+
+/*/ //////////////////////////SaignUp///////////////*/
+
+.Signup {
+	display: flex;
+	flex-direction: column;
+}
+.Signup input {
+	width: 200px;
+	height: 30px;
+	margin-top: 5px;
+	border: solid 3px;
+	display: flex;
+	justify-items: center;
+	align-self: center;
+	flex-direction: column;
+}
+
+.Signup button {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-self: center;
+	align-items: center;
+	width: 208px;
+	height: 35px;
+	margin-top: 10px;
+	cursor: pointer;
+	background-color: black;
+	border: 0px;
+	color: white;
+}
+
+.Signup nav {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-self: center;
+	align-items: center;
+	margin-top: 15px;
+}
+
+.Signup nav,
+a {
+	text-decoration: none;
+	color: blue;
+}
+
+/*/////////////Log////////////////*/
+
+.connection ul,
+li {
+	display: flex;
+	flex-direction: row;
+	margin-right: 30px;
+	justify-content: center;
+	cursor: pointer;
+	list-style: none;
+	color: black;
+	align-items: center;
+}
+
+.active-btn {
+	background-color: black;
+	color: white;
+	width: 80px;
+	height: 40px;
+	border-radius: 10px;
+	text-align: center;
+	align-items: center;
+}
