@@ -8,7 +8,7 @@ export default function Log() {
 	const [LoginModal, setLoginModal] = useState(true);
 
 	const handleModals = (e) => {
-		if (e.target.id === "register") {
+		if (e.target.id === "signup") {
 			setLoginModal(false);
 			setSignupModal(true);
 		} else if (e.target.id === "login") {
@@ -28,7 +28,7 @@ export default function Log() {
 				</li>
 				<li
 					onClick={handleModals}
-					id="register"
+					id="signup"
 					className={SignupModal ? "active-btn" : null}
 				>
 					SignUp

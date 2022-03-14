@@ -1,21 +1,27 @@
 /*///////////////////////////LogIn///////////////*/
 
-.Login {
+#signup {
 	display: flex;
 	flex-direction: column;
 }
-.Login input {
+label {
+	text-align: center;
+}
+.emailError div {
+	justify-content: center;
+}
+
+#signup input {
 	width: 200px;
 	height: 30px;
-	margin-top: 5px;
-	border: solid 3px;
+	border: solid 1px;
 	display: flex;
 	justify-items: center;
 	align-self: center;
 	flex-direction: column;
 }
 
-.Login button {
+#submit-btn {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -23,39 +29,34 @@
 	align-items: center;
 	width: 208px;
 	height: 35px;
-	margin-top: 10px;
 	cursor: pointer;
 	background-color: black;
 	border: 0px;
 	color: white;
 }
 
-.Login nav {
+/*/ //////////////////////////SaignUp - Upload///////////////*/
+h1,
+.message {
 	display: flex;
-	flex-direction: column;
 	justify-content: center;
-	align-self: center;
-	align-items: center;
-	margin-top: 15px;
 }
-
-.Login nav,
-a {
-	text-decoration: none;
-	color: blue;
+.message {
+	color: red;
 }
-
-/*/ //////////////////////////SaignUp///////////////*/
+#file {
+	color: white;
+}
 
 .Signup {
 	display: flex;
 	flex-direction: column;
 }
+
 .Signup input {
 	width: 200px;
 	height: 30px;
-	margin-top: 5px;
-	border: solid 3px;
+	border: solid 1px;
 	display: flex;
 	justify-items: center;
 	align-self: center;
@@ -70,26 +71,10 @@ a {
 	align-items: center;
 	width: 208px;
 	height: 35px;
-	margin-top: 10px;
 	cursor: pointer;
 	background-color: black;
 	border: 0px;
 	color: white;
-}
-
-.Signup nav {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-self: center;
-	align-items: center;
-	margin-top: 15px;
-}
-
-.Signup nav,
-a {
-	text-decoration: none;
-	color: blue;
 }
 
 /*/////////////Log////////////////*/
@@ -114,4 +99,13 @@ li {
 	border-radius: 10px;
 	text-align: center;
 	align-items: center;
+}
+.email,
+.error {
+	color: red;
+}
+
+.success {
+	text-align: center;
+	color: green;
 }

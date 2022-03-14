@@ -1,5 +1,7 @@
 {
   "dependencies": {
-    "@babel/standalone": "^7.17.6"
+    "@babel/standalone": "^7.17.6",
+    "dotenv": "^16.0.0",
+    "react-dotenv": "^0.1.3"
   }
 }

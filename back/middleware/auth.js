@@ -8,7 +8,7 @@ module.exports = (req, res, next) => {
 		// et récupérer le deuxième élément du tableau renvoyé
 		const token = req.headers.authorization.split(" ")[1];
 		// décoder le token en le vérifiant
-		const decodedToken = jwt.verify(token, "process.env.RANDOM_TOKEN_SECRET");
+		const decodedToken = jwt.verify(token, process.env.TOKEN_KEY);
 		// extraire le userId grace au token
 		const userId = decodedToken.userId;
 		// si on a un userId dans le corps de la requête

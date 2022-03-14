@@ -1,5 +1,6 @@
 import User from "./User";
 import "../styles/User.css";
+
 const Users = ({ users }) => {
 	return (
 		<div>

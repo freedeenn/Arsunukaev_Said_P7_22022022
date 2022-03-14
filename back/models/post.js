@@ -1,40 +1,40 @@
 const Sequelize = require("sequelize");
 module.exports = function (sequelize, DataTypes) {
 	return sequelize.define(
-		"User",
+		"Post",
 		{
 			id: {
 				autoIncrement: true,
-				type: DataTypes.SMALLINT.UNSIGNED,
+				type: DataTypes.INTEGER,
 				allowNull: false,
 				primaryKey: true,
+				validate: {
+					notEmpty: true,
+				},
 			},
-			firstName: {
+			userId: {
 				type: DataTypes.STRING(255),
 				allowNull: false,
+				validate: {
+					notEmpty: true,
+				},
 			},
-			lastName: {
+			title: {
+				type: DataTypes.STRING(100),
+				allowNull: false,
+			},
+			description: {
+				type: DataTypes.TEXT,
+				allowNull: true,
+			},
+			imageUrl: {
 				type: DataTypes.STRING(255),
-				allowNull: false,
-			},
-			email: {
-				type: DataTypes.STRING(255),
-				allowNull: false,
-				unique: "email",
-			},
-			password: {
-				type: DataTypes.STRING(255),
-				allowNull: false,
-			},
-			isAdmin: {
-				type: DataTypes.BOOLEAN,
-				allowNull: false,
-				default: false,
+				allowNull: true,
 			},
 		},
 		{
 			sequelize,
-			tableName: "users",
+			tableName: "posts",
 			timestamps: false,
 			indexes: [
 				{
@@ -42,12 +42,6 @@ module.exports = function (sequelize, DataTypes) {
 					unique: true,
 					using: "BTREE",
 					fields: [{ name: "id" }],
-				},
-				{
-					name: "email",
-					unique: true,
-					using: "BTREE",
-					fields: [{ name: "email" }],
 				},
 			],
 		}

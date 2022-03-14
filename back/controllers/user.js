@@ -4,10 +4,10 @@ const User = require("../models/user");
 const cryptoJs = require("crypto-js/md5");
 const sequelize = require("../config/sequelize");
 const db = require("../models/index");
-const user = require("../models/user");
 
 // Création d'un nouvel utilisateur
 exports.signup = (req, res) => {
+	console.log(req.body);
 	if (
 		!req.body.firstName ||
 		!req.body.lastName ||
@@ -18,7 +18,6 @@ exports.signup = (req, res) => {
 			.status(400)
 			.json({ message: "Merci de remplir tous les champs" });
 	}
-	console.log(req.body);
 	db.User.findOne({ where: { email: req.body.email } }).then((user) => {
 		if (!user) {
 			bcrypt
@@ -40,9 +39,7 @@ exports.signup = (req, res) => {
 							})
 						)
 						.catch((error) =>
-							res
-								.status(400)
-								.json({ error: "Merci de remplir tous les champs" })
+							res.status(409).json({ error: "Cet utilisateur existe déjà" })
 						);
 				})
 				.catch((error) => res.status(500).json({ error: error.message }));
@@ -67,7 +64,7 @@ exports.login = (req, res) => {
 							.status(401)
 							.json({ loggedIn: false, message: "Mot de passe incorrect !" });
 					}
-					const token = jwt.sign({ userId: user.id }, "RANDOM_TOKEN_SECRET", {
+					const token = jwt.sign({ userId: user.id }, process.env.TOKEN_KEY, {
 						expiresIn: "24h",
 					});
 					res.status(200).json({
@@ -84,12 +81,9 @@ exports.login = (req, res) => {
 };
 
 exports.getAllUsers = (req, res) => {
-	db.User.find({ attributes: ["id", "firstName", "lastName"] }).then((users) =>
-		res
-			.status(200)
-			.json(users)
-			.catch((error) => res.status(404).json(error))
-	);
+	db.User.findAll({ attributes: ["id", "firstName", "lastName"] })
+		.then((users) => res.status(200).json(users))
+		.catch((error) => res.status(404).json(error));
 };
 
 exports.getOneUser = (req, res) => {
@@ -99,12 +93,12 @@ exports.getOneUser = (req, res) => {
 };
 
 exports.deleteUser = (req, res) => {
-	const token = req.headers.autorization.splite(" ")[1];
-	const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
+	const token = req.headers.authorization.split(" ")[1];
+	const decodedToken = jwt.verify(token, process.env.TOKEN_KEY);
 	const userId = decodedToken.userId;
 	db.User.findOne({ where: { id: req.params.id } })
 		.then((user) => {
-			if (user.id === userid || user.isAdmin === true) {
+			if (user.id === userId || user.isAdmin === true) {
 				user.destroy({ where: { id: req.params.id } }).then(() => {
 					res
 						.status(200)

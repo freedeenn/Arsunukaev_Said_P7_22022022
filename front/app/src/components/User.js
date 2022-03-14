@@ -2,9 +2,7 @@ const User = ({ user }) => {
 	return (
 		<div>
 			<h3 className="user">
-				Nom: {user.lastName} <br /> Prénom: {user.firstName} <br /> email:{" "}
-				{user.email} <br />
-				{user.isAdmin}
+				lastName: {user.lastName} <br /> firstName: {user.firstName}
 			</h3>
 		</div>
 	);

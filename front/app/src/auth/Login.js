@@ -1,18 +1,22 @@
 import "../styles/auth/Log.css";
-import axios, { useState } from "react";
-// import { Link } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import axios from "axios";
+
 export default function Login() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const [errorMessage, setErrorMessage] = useState("");
+	// const dispatch = useDispatch();
+	let navigate = useNavigate();
 
 	const handleLogin = (e) => {
 		e.preventDefault();
-		const emailError = document.querySelector(".email.error");
-		const passwordError = document.querySelector(".password.error");
 
 		axios({
 			method: "post",
-			url: `${process.env.REACT_APP_API_URL}api/auth/login`,
+			url: `${"http://localhost:4000/api/auth/login"}`,
 			whithCredentials: true,
 			data: {
 				email,
@@ -20,51 +24,49 @@ export default function Login() {
 			},
 		})
 			.then((res) => {
-				if (res.data.errors) {
-					emailError.innerHTML = res.data.errors.email;
-					passwordError.innerHTML = res.data.errors.password;
+				if (res.data.loggedIn) {
+					console.log(res);
+					localStorage.setItem("loggedIn", true);
+					localStorage.setItem("token", res.data.token);
+					localStorage.setItem("userId", res.data.userId);
+					navigate("/");
 				} else {
-					window.location = "/";
+					setErrorMessage(res.data.message);
+					console.log(res.data.message);
 				}
 			})
 			.catch((err) => {
 				console.log(err);
 			});
 	};
+
 	return (
 		<form action="" onSubmit={handleLogin} id="signup">
 			<label htmlFor="email">Email</label>
-			<br />
 			<input
-				type="text"
+				type="email"
 				name="email"
 				id="email"
+				required
 				onChange={(e) => setEmail(e.target.value)}
 				value={email}
 			/>
-			<div className="email error"></div>
+			<div className="message" style={{ color: "red" }}>
+				{errorMessage}
+			</div>
 			<br />
 			<label htmlFor="password">password</label>
-			<br />
 			<input
 				type="password"
 				name="password"
 				id="password"
+				required
 				onChange={(e) => setPassword(e.target.value)}
+				value={password}
 			/>
-			<div className="password error"></div>
+			{errorMessage}
 			<br />
-			<input type="submit" value="Login" />
+			<input id="submit-btn" type="submit" value="Login" />
 		</form>
-		/* // <div>
-		// 	<div className="Login">
-		// 		<input type="text" placeholder="login" />
-		// 		<input type="password" placeholder="password" />
-		// 		<button>Login</button>
-		// 		{/* <nav>
-		// 			<Link to="/Signup">Sign-up</Link>
-		// 		</nav> */
-		/* // 	</div> */
-		/* // </div> */
 	);
 }

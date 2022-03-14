@@ -1,71 +1,39 @@
-import Button from "./Button";
-import Header from "./Header";
-import Users from "./Users";
-import { useState } from "react";
+import NavBar from "./NavBar";
+import { useState, useEffect } from "react";
+// import axios from "axios";
 
 const Home = () => {
-	const onClick = () => {
-		console.log("onClick");
-	};
-	const [users, setUsers] = useState([
-		{
-			id: 1,
-			firstName: "Said",
-			lastName: "Bers",
-			email: "freedeenn@gmail.com",
-			isAdmin: "Admin",
-		},
-		{
-			id: 2,
-			firstName: "Said",
-			lastName: "Bers",
-			email: "freedeenn@gmail.com",
-			isAdmin: false,
-		},
-		{
-			id: 3,
-			firstName: "Said",
-			lastName: "Bers",
-			email: "freedeenn@gmail.com",
-			isAdmin: false,
-		},
-		{
-			id: 4,
-			firstName: "Said",
-			lastName: "Bers",
-			email: "freedeenn@gmail.com",
-			isAdmin: false,
-		},
-		{
-			id: 5,
-			firstName: "Said",
-			lastName: "Bers",
-			email: "freedeenn@gmail.com",
-			isAdmin: false,
-		},
-		{
-			id: 6,
-			firstName: "Said",
-			lastName: "Bers",
-			email: "freedeenn@gmail.com",
-			isAdmin: false,
-		},
-		{
-			id: 7,
-			firstName: "Said",
-			lastName: "Bers",
-			email: "freedeenn@gmail.com",
-			isAdmin: false,
-		},
-	]);
+	useEffect(() => {
+		if (!localStorage.getItem("loggedIn")) {
+			localStorage.setItem("loggedIn", false);
+		}
+	}, []);
+
+	// const [firstName, setFirstName] = useState("");
+	// const [lastName, setLastName] = useState("");
+
+	// const handleUsers = (e) => {
+	// 	e.preventDefault();
+
+	// 	axios({
+	// 		method: "get",
+	// 		url: `${"http://localhost:4000/api/auth/"}`,
+	// 		users: {
+	// 			lastName,
+	// 			firstName,
+	// 		},
+	// 	})
+	// 		.then((res) => {
+	// 			console.log(res.users);
+	// 		})
+	// 		.catch((err) => {
+	// 			console.log(err);
+	// 		});
+	// };
 	return (
 		<div>
-			<Header />
-			<Button text="Home" onClick={onClick} />
-			<Button text="Profil" onClick={onClick} />
-			<Button text="Utilisateurs" onClick={onClick} />
-			<Button text="Notification" onClick={onClick} />
-			<Users users={users} />
+			<NavBar />
+			{/* <Users users={handleUsers} /> */}
 		</div>
 	);
 };
