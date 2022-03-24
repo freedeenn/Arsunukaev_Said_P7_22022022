@@ -1,17 +1,28 @@
 import "../styles/NavBar.css";
 import logo from "../assets/logo.png";
 import { NavLink } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Logout from "../auth/Logout";
+// import { useContext } from "react";
 // import { userIdContext } from "./AppContext";
 
 function Header({ children }) {
 	// const userId = useContext(userIdContext);
 	const [loggedIn, setLoggedIn] = useState(false);
+	let navigate = useNavigate();
+
+	const logout = (e) => {
+		e.preventDefault();
+
+		localStorage.clear();
+	};
 
 	useEffect(() => {
 		setLoggedIn(localStorage.getItem("loggedIn"));
 	}, [localStorage.getItem("loggedIn")]);
 
+	//AFFICHAGE//
 	return (
 		<div className="header">
 			{children}
@@ -20,17 +31,19 @@ function Header({ children }) {
 					<img src={logo} alt="Groupomania" className="logo" />
 					<h1 className="title">Groupomania</h1>
 				</NavLink>
-				{loggedIn !== false && (
+				{loggedIn ? (
 					<>
 						<ul>
 							<li className="Welcome">
 								<NavLink to="/profil">Profil</NavLink>
 								<NavLink to="/Upload">Upload</NavLink>
-								<NavLink to="/profil">Log-Out</NavLink>
+								<NavLink to="/Logout" onClick={() => this.logout()}>
+									LogOut
+								</NavLink>
 							</li>
 						</ul>
 					</>
-				)}
+				) : null}
 			</div>
 		</div>
 	);

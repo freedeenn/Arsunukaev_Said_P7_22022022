@@ -1,14 +1,12 @@
 import "../styles/auth/Log.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import axios from "axios";
 
 export default function Login() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [errorMessage, setErrorMessage] = useState("");
-	// const dispatch = useDispatch();
 	let navigate = useNavigate();
 
 	const handleLogin = (e) => {
@@ -29,8 +27,10 @@ export default function Login() {
 					localStorage.setItem("loggedIn", true);
 					localStorage.setItem("token", res.data.token);
 					localStorage.setItem("userId", res.data.userId);
-					navigate("/");
+					localStorage.setItem("userInfo", res.data.userInfo);
+					// navigate("/");
 				} else {
+					console.log(res);
 					setErrorMessage(res.data.message);
 					console.log(res.data.message);
 				}

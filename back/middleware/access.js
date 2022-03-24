@@ -1,7 +1,7 @@
-const Post = require("../models/post");
-module.exports = (req, res, next) => {
+import { findOne } from "../models/Post";
+export default (req, res, next) => {
 	try {
-		Post.findOne({ _id: req.params.id }) // retrouver un élément par son id
+		findOne({ _id: req.params.id }) // retrouver un élément par son id
 			.then((post) => {
 				if (post.userId !== req.auth.userId) {
 					throw "Vous avez pas le droit !"; //Renvoie l'erreur

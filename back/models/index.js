@@ -42,5 +42,10 @@ Object.keys(db).forEach((modelName) => {
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
-
+// db.User.hasMany(db.Post);
+// db.Post.belongsTo(db.User);
+// async function test() {
+// 	await db.sequelize.sync({ force: true });
+// }
+// test();
 module.exports = db;

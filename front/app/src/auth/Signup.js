@@ -2,6 +2,7 @@ import "../styles/auth/Log.css";
 import axios from "axios";
 import { useState } from "react";
 import Login from "./Login";
+
 const Signup = () => {
 	const [formSubmit, setFormSubmit] = useState(false);
 	const [firstName, setFirstName] = useState("");

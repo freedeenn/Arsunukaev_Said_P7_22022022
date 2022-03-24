@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Login from "./Login";
-import Signup from "./Signup";
+import Login from "../auth/Login";
+import Signup from "../auth/Signup";
 import "../styles/auth/Log.css";
 
 export default function Log() {

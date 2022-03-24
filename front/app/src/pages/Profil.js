@@ -1,6 +1,6 @@
-import Log from "../auth/Log";
-import NavBar from "./NavBar";
-import Footer from "./Footer";
+import Log from "./Log";
+import NavBar from "../components/NavBar";
+import Footer from "../components/Footer";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 // import { userIdContext } from "./AppContext";
@@ -8,11 +8,15 @@ import { useState, useEffect } from "react";
 
 const Profil = () => {
 	const [loggedIn, setLoggedIn] = useState(false);
+	// const [userInfo, setUserInfo] = useState("");
+	const userInfo = localStorage.getItem("userInfo");
 	let navigate = useNavigate();
+	console.log(userInfo);
 
 	useEffect(() => {
 		setLoggedIn(localStorage.getItem("loggedIn"));
 	}, [localStorage.getItem("loggedIn")]);
+
 	return (
 		<div className="container">
 			{loggedIn ? (

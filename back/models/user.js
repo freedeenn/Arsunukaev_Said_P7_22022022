@@ -1,14 +1,9 @@
+"use strict";
 const Sequelize = require("sequelize");
 module.exports = function (sequelize, DataTypes) {
-	return sequelize.define(
+	const User = sequelize.define(
 		"User",
 		{
-			id: {
-				autoIncrement: true,
-				type: DataTypes.SMALLINT.UNSIGNED,
-				allowNull: false,
-				primaryKey: true,
-			},
 			firstName: {
 				type: DataTypes.STRING(255),
 				allowNull: false,
@@ -50,6 +45,22 @@ module.exports = function (sequelize, DataTypes) {
 					fields: [{ name: "email" }],
 				},
 			],
-		}
+		},
+		{}
 	);
+	User.associate = function (models) {
+		// associations can be defined here
+		models.User.hasMany(models.Post);
+		models.User.hasMany(models.Comment);
+	};
+
+	return User;
 };
+// User.associate = (models) => {
+// 		User.hasMeny(Post, {
+// 			foreignKey: "owner",
+// 		});
+// 		User.hasMeny(Comment, {
+// 			foreignKey: "creatorId",
+// 		});
+// 	})

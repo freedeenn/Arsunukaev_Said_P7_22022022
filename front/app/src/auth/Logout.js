@@ -1,14 +1,12 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Logout = () => {
-	const logout = async ({ logout }) => {
-		const [loggedIn, setLoggedIn] = useState("");
-		const onClick = () => {
-			console.log(logout);
-		};
-	};
-	return <li onClick={logout}></li>;
+	let navigate = useNavigate();
+
+	localStorage.clear();
+	navigate("/profil");
+
+	return <input type="submit" value="logout" />;
 };
 
 export default Logout;

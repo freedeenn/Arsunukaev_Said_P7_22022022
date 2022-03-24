@@ -1,31 +1,16 @@
+"use strict";
 const Sequelize = require("sequelize");
 module.exports = function (sequelize, DataTypes) {
-	return sequelize.define(
+	const Post = sequelize.define(
 		"Post",
 		{
-			id: {
-				autoIncrement: true,
-				type: DataTypes.INTEGER,
-				allowNull: false,
-				primaryKey: true,
-				validate: {
-					notEmpty: true,
-				},
-			},
-			userId: {
-				type: DataTypes.STRING(255),
-				allowNull: false,
-				validate: {
-					notEmpty: true,
-				},
-			},
 			title: {
 				type: DataTypes.STRING(100),
-				allowNull: false,
+				allowNull: true,
 			},
 			description: {
 				type: DataTypes.TEXT,
-				allowNull: true,
+				allowNull: false,
 			},
 			imageUrl: {
 				type: DataTypes.STRING(255),
@@ -44,6 +29,17 @@ module.exports = function (sequelize, DataTypes) {
 					fields: [{ name: "id" }],
 				},
 			],
-		}
+		},
+		{}
 	);
+	Post.associate = function (models) {
+		// associations can be defined here
+		models.Post.belongsTo(models.User, {
+			foreignKey: {
+				allowNull: false,
+			},
+		});
+		models.Post.hasMany(models.Comment);
+	};
+	return Post;
 };
