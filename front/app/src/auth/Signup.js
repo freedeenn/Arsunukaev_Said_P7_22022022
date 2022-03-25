@@ -10,18 +10,17 @@ const Signup = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [controlPassword, setControlPassword] = useState("");
+	const [firstNameError, setFirstNameError] = useState("");
+	const [lastNameError, setLastNameError] = useState("");
+	const [emailError, setEmailError] = useState("");
+	const [passwordError, setPasswordError] = useState("");
+	const [controlPasswordError, setControlPasswordError] = useState("");
 
 	const handleSignup = async (e) => {
 		e.preventDefault();
-		const firstNameError = document.querySelector(".firstName.error");
-		const lastNameError = document.querySelector(".lastName.error");
-		const emailError = document.querySelector(".email.error");
-		const passwordError = document.querySelector(".password.error");
-		const ControlPasswordError = document.querySelector(
-			".ControlPassword.error"
-		);
+
 		if (password !== controlPassword) {
-			ControlPasswordError.innerHTML = "password error";
+			setControlPasswordError("password error");
 		} else {
 			await axios({
 				method: "post",
@@ -35,17 +34,14 @@ const Signup = () => {
 			})
 				.then((res) => {
 					console.log(res);
-					if (res.data.errors) {
-						firstNameError.innerHTML = res.data.errors.firstName;
-						lastNameError.innerHTML = res.data.errors.lastName;
-						emailError.innerHTML = res.data.errors.email;
-						passwordError.innerHTML = res.data.errors.password;
-					} else {
-						setFormSubmit(true);
-					}
+					setFormSubmit(true);
 				})
-				.catch((err) => {
-					console.log(err);
+				.catch((error) => {
+					console.error(error.response.data.error);
+					setFirstNameError(error.response.data.message);
+					setLastNameError(error.response.data.message);
+					setEmailError(error.response.data.error, error.response.data.message);
+					setPasswordError(error.response.data.message);
 				});
 		}
 	};
@@ -68,7 +64,9 @@ const Signup = () => {
 						onChange={(e) => setFirstName(e.target.value)}
 						value={firstName}
 					/>
-					<div className="firstNameError"></div>
+					<div className="message" style={{ color: "red" }}>
+						{firstNameError}
+					</div>
 					<br />
 					<label htmlFor="lastName">lastName</label>
 					<input
@@ -79,7 +77,9 @@ const Signup = () => {
 						onChange={(e) => setLastName(e.target.value)}
 						value={lastName}
 					/>
-					<div className="lastNameError"></div>
+					<div className="message" style={{ color: "red" }}>
+						{lastNameError}
+					</div>
 					<br />
 					<label htmlFor="email">email</label>
 					<input
@@ -90,7 +90,9 @@ const Signup = () => {
 						onChange={(e) => setEmail(e.target.value)}
 						value={email}
 					/>
-					<div className="emailError"></div>
+					<div className="message" style={{ color: "red" }}>
+						{emailError}
+					</div>
 					<br />
 					<label htmlFor="password">password</label>
 					<input
@@ -101,7 +103,9 @@ const Signup = () => {
 						onChange={(e) => setPassword(e.target.value)}
 						value={password}
 					/>
-					<div className="passwordError"></div>
+					<div className="message" style={{ color: "red" }}>
+						{passwordError}
+					</div>
 					<br />
 					<label htmlFor="controlPassword">password</label>
 					<input
@@ -112,7 +116,9 @@ const Signup = () => {
 						onChange={(e) => setControlPassword(e.target.value)}
 						value={controlPassword}
 					/>
-					<div className="ControlPasswordError"></div>
+					<div className="message" style={{ color: "red" }}>
+						{controlPasswordError}
+					</div>
 					<br />
 					<input id="submit-btn" type="submit" value="Sign Up" />
 				</form>

@@ -28,15 +28,14 @@ export default function Login() {
 					localStorage.setItem("token", res.data.token);
 					localStorage.setItem("userId", res.data.userId);
 					localStorage.setItem("userInfo", res.data.userInfo);
-					// navigate("/");
+					navigate("/");
 				} else {
 					console.log(res);
-					setErrorMessage(res.data.message);
-					console.log(res.data.message);
 				}
 			})
-			.catch((err) => {
-				console.log(err);
+			.catch((error) => {
+				console.error(error.response.data.message);
+				setErrorMessage(error.response.data.message);
 			});
 	};
 
@@ -64,7 +63,10 @@ export default function Login() {
 				onChange={(e) => setPassword(e.target.value)}
 				value={password}
 			/>
-			{errorMessage}
+			<div className="message" style={{ color: "red" }}>
+				{errorMessage}
+			</div>
+
 			<br />
 			<input id="submit-btn" type="submit" value="Login" />
 		</form>

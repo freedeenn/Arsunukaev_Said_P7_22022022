@@ -35,7 +35,7 @@ exports.signup = (req, res) => {
 								loggedIn: true,
 								userInfo: [user.firstName, user.lastName],
 								userId: user.id,
-								message: "Enregistrement réussie. Connectez-vous.",
+								message: "Inscription terminée avec succès. Connectez-vous.",
 							})
 						)
 						.catch((error) =>
@@ -54,15 +54,18 @@ exports.login = (req, res) => {
 	db.User.findOne({ where: { email: cryptoJs(req.body.email).toString() } })
 		.then((user) => {
 			if (!user) {
-				return res.status(401).json({ message: "Utilisateur non trouvé !" });
+				return res
+					.status(401)
+					.json({ message: "Email ou Mot de passe incorrect !" });
 			}
 			bcrypt
 				.compare(req.body.password, user.password)
 				.then((valid) => {
 					if (!valid) {
-						return res
-							.status(401)
-							.json({ loggedIn: false, message: "Mot de passe incorrect !" });
+						return res.status(401).json({
+							loggedIn: false,
+							message: "Email ou Mot de passe incorrect !",
+						});
 					}
 					const token = jwt.sign({ userId: user.id }, process.env.TOKEN_KEY, {
 						expiresIn: "24h",
