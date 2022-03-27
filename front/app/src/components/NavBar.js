@@ -26,9 +26,10 @@ function Header({ children }) {
 					<>
 						<ul>
 							<li className="Welcome">
-								<NavLink to="/profil">Profil</NavLink>
+								<NavLink to="/">Home</NavLink>
+								<NavLink to="/Profil">Profil</NavLink>
 								<NavLink to="/Upload">Upload</NavLink>
-								<NavLink to="/Logout">LogOut</NavLink>
+								<NavLink to="/LogOut">LogOut</NavLink>
 							</li>
 						</ul>
 					</>

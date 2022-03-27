@@ -29,6 +29,7 @@ const Post = ({ post }) => {
 			.get("http://localhost:4000/api/post", config)
 			.then((res) => {
 				setPost(res.data);
+				console.log();
 			})
 			.catch((error) => console.log(error));
 	}, []);
@@ -41,13 +42,8 @@ const Post = ({ post }) => {
 						<div key={post.id} post={post}>
 							<div className="Container">
 								<div className="Post">
-									{/* {console.log(post)} */}
 									<h5>
-										{Post.map((User) => {
-											if (User.id === post.UserId) {
-												return `${post.User.firstName} ${post.User.lastName}`;
-											}
-										})}
+										{post.User.firstName} {post.User.lastName}
 									</h5>
 									<div className="Image">
 										<img src={post.imageUrl} alt="" />

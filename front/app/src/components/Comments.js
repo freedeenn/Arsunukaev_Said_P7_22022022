@@ -4,33 +4,36 @@ import Comment from "./Comment";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const Comments = ({ post, comment }) => {
+const Comments = ({ post }) => {
 	const [Comments, setComments] = useState("");
+	const token = localStorage.getItem("token");
+	const config = {
+		headers: {
+			"Content-Type": "multipart/form-data",
+			Authorization: `Bearer ${token}`,
+		},
+	};
 
-	const Add = (e) => {
+	const Send = (e) => {
 		e.preventDefault();
-		console.log("click");
-		const token = localStorage.getItem("token");
-		const formData = new FormData();
-		formData.append("Comment", Comment);
 
-		// const config = {
-		// 	headers: {
-		// 		"Content-Type": "multipart/form-data",
-		// 		Authorization: `Bearer ${token}`,
-		// 	},
-		// };
-
-		// useEffect(() => {
-		// 	axios
-		// 		.post(`http://localhost:4000/api/comment/create`, config, formData)
-		// 		.then((res) => {
-		// 			setAddComment("");
-		// 		});
-		// });
+		useEffect(() => {
+			axios
+				.post(
+					`http://localhost:4000/api/comment/create${post.id}`,
+					config,
+					Comments
+				)
+				.then((res) => {
+					console.log(res);
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+		});
 	};
 	return (
-		<form className="form-comment">
+		<form action="" onSubmit={Send} className="form-comment">
 			<div className="form-control">
 				<Comment post={post} />
 				<input
@@ -40,7 +43,7 @@ const Comments = ({ post, comment }) => {
 					onChange={(e) => setComments(e.target.value)}
 					value={Comments}
 				/>
-				<input id="btn" type="submit" value="Add" />
+				<input id="btn" type="submit" value={Send} />
 			</div>
 		</form>
 	);

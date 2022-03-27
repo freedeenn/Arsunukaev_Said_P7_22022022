@@ -5,7 +5,7 @@ import axios from "axios";
 import Home from "./pages/Home";
 import Profil from "./pages/Profil";
 import Upload from "./pages/Upload";
-import Logout from "./auth/Logout";
+import LogOut from "./auth/Logout";
 
 function App() {
 	const [token, setToken] = useState(null);
@@ -26,7 +26,7 @@ function App() {
 			<Routes>
 				<Route path="/" element={<Home />} />
 				<Route path="/Profil" element={<Profil />} />
-				<Route path="/Logout" element={<Logout />} />
+				<Route path="/LogOut" element={<LogOut />} />
 				<Route path="/Upload" element={<Upload />} />
 			</Routes>
 		</userIdContext.Provider>

@@ -1,12 +1,11 @@
 import { useNavigate } from "react-router-dom";
 
-const Logout = () => {
+const LogOut = () => {
 	let navigate = useNavigate();
-
+	navigate("/");
 	localStorage.clear();
-	navigate("/profil");
 
-	return <input type="submit" value="logout" />;
+	return <input type="submit" value="LogOut" />;
 };
 
-export default Logout;
+export default LogOut;

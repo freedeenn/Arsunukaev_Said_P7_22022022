@@ -58,14 +58,17 @@ exports.modifyPost = (req, res, next) => {
 exports.deletePost = (req, res) => {
 	db.Post.findOne({ where: { id: req.params.id } }).then((post) => {
 		console.log("---------");
-		console.log(post.UserId.isAdmin);
+		console.log();
 		console.log("---------");
 		if (post.UserId === req.auth.userId || post.UserId.isAdmin === true) {
-			post
-				.destroy({ where: { id: req.params.id } })
-				.then(() =>
-					res.status(200).json({ message: `Post supprimé !${req.params.id}` })
-				);
+			const filename = post.imageUrl.split("/images/")[1];
+			fs.unlink(`images/${filename}`, () => {
+				post
+					.destroy({ where: { id: req.params.id } })
+					.then(() =>
+						res.status(200).json({ message: `Post supprimé !${req.params.id}` })
+					);
+			});
 		} else {
 			res.status(401).json({ message: "Impossible de supprimer le post" });
 		}
