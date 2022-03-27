@@ -1,18 +1,18 @@
 import Button from "./Button";
-import "../styles/AddComment.css";
+import "../styles/Comments.css";
 import Comment from "./Comment";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const AddComment = ({ post, comment }) => {
-	const [addComment, setAddComment] = useState("");
+const Comments = ({ post, comment }) => {
+	const [Comments, setComments] = useState("");
 
 	const Add = (e) => {
 		e.preventDefault();
 		console.log("click");
 		const token = localStorage.getItem("token");
 		const formData = new FormData();
-		formData.append("addComment", addComment);
+		formData.append("Comment", Comment);
 
 		// const config = {
 		// 	headers: {
@@ -32,13 +32,13 @@ const AddComment = ({ post, comment }) => {
 	return (
 		<form className="form-comment">
 			<div className="form-control">
-				<Comment />
+				<Comment post={post} />
 				<input
 					type="text"
-					placeholder="Add Comment"
+					placeholder="Comment"
 					// required
-					onChange={(e) => setAddComment(e.target.value)}
-					value={addComment}
+					onChange={(e) => setComments(e.target.value)}
+					value={Comments}
 				/>
 				<input id="btn" type="submit" value="Add" />
 			</div>
@@ -46,4 +46,4 @@ const AddComment = ({ post, comment }) => {
 	);
 };
 
-export default AddComment;
+export default Comments;

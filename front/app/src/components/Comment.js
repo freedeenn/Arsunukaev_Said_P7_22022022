@@ -1,9 +1,9 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import Post from "./Post";
 
-const Comment = ({ comment }) => {
+const Comment = ({ post }) => {
 	const [Comment, setComment] = useState("");
+	const [Post, setPost] = useState([]);
 	const token = localStorage.getItem("token");
 	const config = {
 		headers: {
@@ -11,25 +11,46 @@ const Comment = ({ comment }) => {
 			Authorization: `Bearer ${token}`,
 		},
 	};
-
+	//REQUETTE GET//
+	// useEffect(() => {
+	// 	axios
+	// 		.get(`http://localhost:4000/api/comment`, config)
+	// 		.then((res) => {
+	// 			setComment(res.data);
+	// 		})
+	// 		.catch((err) => console.log(err));
+	// }, []);
+	//REQUETTE GET//
 	useEffect(() => {
 		axios
-			.get(`http://localhost:4000/api/comment`, config)
+			.get("http://localhost:4000/api/post", config)
 			.then((res) => {
-				setComment(res.data);
+				setPost(res.data);
 			})
-			.catch((err) => console.log(err));
+			.catch((error) => console.log(error));
 	}, []);
+
+	//AFFICHAGE//
 	return (
 		<div>
-			{Comment.length > 0
-				? Comment.map((comment) => (
-						<div key={comment.id} comment={comment}>
-							<h5>{comment.UserId}</h5>
-							<p>{comment.comment}</p>
-						</div>
-				  ))
-				: null}
+			{
+				// Comment.length > 0
+				// 	?
+				post.Comments.map((comment) => (
+					<div id="comment" key={comment.id} post={post}>
+						{console.log(post.Comments.comment)}
+						{/* <h5>
+							{post.map((User) => {
+								if (User.id === comment.UserId) {
+									return `${comment.User.firstName} ${comment.User.lastName} : `;
+								}
+							})}
+						</h5> */}
+						<p>{comment.comment}</p>
+					</div>
+				))
+				// : null
+			}
 		</div>
 	);
 };

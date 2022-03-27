@@ -8,7 +8,7 @@
 
 .Post {
 	width: 50%;
-	height: 400px;
+	height: auto;
 	border: solid 2px black;
 	align-items: center;
 	margin-top: 30px;
@@ -16,7 +16,7 @@
 
 .Image {
 	width: 100%;
-	height: 70%;
+	height: 60%;
 	/* background-color: blue; */
 }
 img {
@@ -29,6 +29,12 @@ img {
 	width: 100%;
 	height: 30%;
 	/* background-color: chartreuse; */
+}
+.description {
+	margin: 5px;
+}
+h2 {
+	margin: 5px;
 }
 
 h2 svg {

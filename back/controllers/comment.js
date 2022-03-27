@@ -1,9 +1,9 @@
-const models = require("../models");
-const jwt = require("jsonwebtoken");
-const Post = models.post;
-const User = models.user;
-const Comment = models.comment;
 const db = require("../models/index");
+const models = require("../models");
+const Post = models.posts;
+const User = models.users;
+const Comment = models.comment;
+const jwt = require("jsonwebtoken");
 
 // Création d'un commentaire
 exports.createComment = (req, res) => {
@@ -25,43 +25,37 @@ exports.createComment = (req, res) => {
 
 // Suppression d'un commentaire
 exports.deleteComment = (req, res) => {
-	Post.hasMany(Comment, { foreignKey: "postId" });
-	Comment.belongsTo(Post, {
-		foreignKey: "postId",
-		onDelete: "CASCADE",
-		hooks: true,
-	});
-	Comment.findOne({ where: { id: req.params.id } });
-	if (Comment.userId === req.body.id || isAdmin === true) {
-		Comment.destroy({ where: { id: req.params.id } }).then(() => {
-			res.status(200).json({
-				message: "Commentaire supprimé !",
+	db.Comment.findOne({ where: { id: req.params.id } }).then((comment) => {
+		console.log("---------");
+		console.log(comment.UserId.isAdmin);
+		console.log("---------");
+		if (comment.UserId === req.auth.userId || comment.UserId.isAdmin === true) {
+			comment.destroy({ where: { id: req.params.id } }).then(() => {
+				res.status(200).json({
+					message: "Commentaire supprimé !",
+				});
 			});
-		});
-	} else {
-		res.status(401).json({
-			message: "Impossible de supprimer le commentaire ",
-		});
-	}
+		} else {
+			res.status(401).json({
+				message: "Impossible de supprimer le commentaire ",
+			});
+		}
+	});
 };
 
 // Récupérer les commentaires du post
 exports.getCommentsByPost = (req, res) => {
-	// Post.hasMany(Comment, { foreignKey: "postId" });
-	// Comment.belongsTo(Post, { foreignKey: "postId" });
-	// User.hasMany(Comment, { foreignKey: "userId" });
-	// Comment.belongsTo(User, { foreignKey: "userId" });
 	db.Comment.findAll({
 		where: {
 			postId: req.params.id,
 		},
-		// attributes: ["comment", "createdAt", "userId", "id"],
-		// include: [
-		// 	{
-		// 		model: User,
-		// 		attributes: ["firstName", "lastName", "id"],
-		// 	},
-		// ],
+		attributes: ["comment", "createdAt", "userId", "id"],
+		include: [
+			{
+				model: db.User,
+				attributes: ["firstName", "lastName", "id"],
+			},
+		],
 	})
 		.then((comment) => {
 			res.status(200).json(comment);
@@ -71,20 +65,14 @@ exports.getCommentsByPost = (req, res) => {
 		});
 };
 exports.getAllComments = (req, res) => {
-	// User.hasMany(Post, { foreignKey: "userId" });
-	// Post.belongsTo(User, { foreignKey: "userId" });
-	// User.hasMany(Comment, { foreignKey: "userId" });
-	// Comment.belongsTo(User, { foreignKey: "userId" });
-	// Post.hasMany(Comment, { foreignKey: "postId" });
-	// Comment.belongsTo(Post, { foreignKey: "postId" });
 	db.Comment.findAll({
-		// attributes: ["comment", "createdAt", "userId", "id", "postId", "updatedAt"],
-		// include: [
-		// 	{
-		// 		model: User,
-		// 		attributes: ["firstName", "lastName", "id"],
-		// 	},
-		// ],
+		attributes: ["comment", "createdAt", "userId", "id", "postId", "updatedAt"],
+		include: [
+			{
+				model: db.User,
+				attributes: ["firstName", "lastName", "id"],
+			},
+		],
 	})
 		.then((comments) => {
 			res.status(200).json(comments);

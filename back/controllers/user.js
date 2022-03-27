@@ -1,9 +1,12 @@
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const User = require("../models/user");
-const cryptoJs = require("crypto-js/md5");
 const sequelize = require("../config/sequelize");
 const db = require("../models/index");
+const models = require("../models");
+const User = models.users;
+const Post = models.posts;
+const Comment = models.comments;
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
+const cryptoJs = require("crypto-js/md5");
 
 // Création d'un nouvel utilisateur
 exports.signup = (req, res) => {
@@ -75,7 +78,7 @@ exports.login = (req, res) => {
 						userInfo: [user.firstName, user.lastName],
 						userId: user.id,
 						token,
-						role: user.isAdmin,
+						isAdmin: user.isAdmin,
 					});
 				})
 				.catch((error) => res.status(500).json({ error: error.message }));
@@ -83,35 +86,36 @@ exports.login = (req, res) => {
 		.catch((error) => res.status(500).json({ error: error.message }));
 };
 
+// trouver tous les utilisateurs
 exports.getAllUsers = (req, res) => {
 	db.User.findAll({ attributes: ["id", "firstName", "lastName"] })
 		.then((users) => res.status(200).json(users))
 		.catch((error) => res.status(404).json(error));
 };
 
+// touver un utilisateur
 exports.getOneUser = (req, res) => {
 	db.User.findOne({ where: { id: req.params.id } })
 		.then((user) => res.status(200).json(user))
 		.catch((error) => res.status(404).json(error));
 };
 
+// supprimer un utilisateur
 exports.deleteUser = (req, res) => {
-	const token = req.headers.authorization.split(" ")[1];
-	const decodedToken = jwt.verify(token, process.env.TOKEN_KEY);
-	const userId = decodedToken.userId;
 	db.User.findOne({ where: { id: req.params.id } })
 		.then((user) => {
-			if (user.id === userId || user.isAdmin === true) {
-				user.destroy({ where: { id: req.params.id } }).then(() => {
-					res
-						.status(200)
-						.json({ message: "Votre compte a bien été supprimé !" })
-						.catch((err) =>
-							res
-								.status(400)
-								.json({ message: "Votre compte n'a pas pu étre supprimé !" })
-						);
-				});
+			if (user.id === req.auth.userId || user.isAdmin === true) {
+				user
+					.destroy({ where: { id: req.params.id } })
+					.then(() =>
+						res
+							.status(200)
+							.json({ message: "Votre compte a bien été supprimé !" })
+					);
+			} else {
+				res
+					.status(400)
+					.json({ message: "Votre compte n'a pas pu étre supprimé !" });
 			}
 		})
 		.catch((error) => res.status(500).json({ error: error.message }));

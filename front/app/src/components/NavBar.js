@@ -2,21 +2,12 @@ import "../styles/NavBar.css";
 import logo from "../assets/logo.png";
 import { NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import Logout from "../auth/Logout";
 // import { useContext } from "react";
 // import { userIdContext } from "./AppContext";
 
 function Header({ children }) {
 	// const userId = useContext(userIdContext);
 	const [loggedIn, setLoggedIn] = useState(false);
-	let navigate = useNavigate();
-
-	const logout = (e) => {
-		e.preventDefault();
-
-		localStorage.clear();
-	};
 
 	useEffect(() => {
 		setLoggedIn(localStorage.getItem("loggedIn"));
@@ -37,9 +28,7 @@ function Header({ children }) {
 							<li className="Welcome">
 								<NavLink to="/profil">Profil</NavLink>
 								<NavLink to="/Upload">Upload</NavLink>
-								<NavLink to="/Logout" onClick={() => this.logout()}>
-									LogOut
-								</NavLink>
+								<NavLink to="/Logout">LogOut</NavLink>
 							</li>
 						</ul>
 					</>

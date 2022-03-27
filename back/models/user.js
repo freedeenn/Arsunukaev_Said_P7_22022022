@@ -56,11 +56,3 @@ module.exports = function (sequelize, DataTypes) {
 
 	return User;
 };
-// User.associate = (models) => {
-// 		User.hasMeny(Post, {
-// 			foreignKey: "owner",
-// 		});
-// 		User.hasMeny(Comment, {
-// 			foreignKey: "creatorId",
-// 		});
-// 	})

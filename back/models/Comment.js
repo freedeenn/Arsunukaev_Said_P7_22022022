@@ -39,14 +39,12 @@ module.exports = function (sequelize, DataTypes) {
 	Comment.associate = function (models) {
 		// associations can be defined here
 		models.Comment.belongsTo(models.User, {
-			foreignKey: {
-				allowNull: false,
-			},
+			onDelete: "CASCADE",
+			hooks: true,
 		});
 		models.Comment.belongsTo(models.Post, {
-			foreignKey: {
-				allowNull: false,
-			},
+			onDelete: "CASCADE",
+			hooks: true,
 		});
 	};
 	return Comment;

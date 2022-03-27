@@ -3,13 +3,11 @@ import "../styles/Post.css";
 import axios from "axios";
 import { FaTimes } from "react-icons/fa";
 import Button from "./Button";
-import AddComment from "./AddComment";
-import Comment from "./Comment";
+import Comments from "./Comments";
 
 const Post = ({ post }) => {
 	const [Post, setPost] = useState([]);
-	const [User, setUser] = useState("");
-	const [showAddComment, setShowAddComment] = useState(false);
+	const [showComments, setShowComments] = useState(false);
 	const token = localStorage.getItem("token");
 	const config = {
 		headers: {
@@ -32,17 +30,7 @@ const Post = ({ post }) => {
 			.then((res) => {
 				setPost(res.data);
 			})
-			.catch((err) => console.log(err));
-	}, []);
-
-	useEffect(() => {
-		axios
-			.get("http://localhost:4000/api/auth", config)
-			.then((res) => {
-				setUser(res.data);
-				console.log(res.data);
-			})
-			.catch((err) => console.log(err));
+			.catch((error) => console.log(error));
 	}, []);
 
 	//AFFICHAGE//
@@ -53,11 +41,11 @@ const Post = ({ post }) => {
 						<div key={post.id} post={post}>
 							<div className="Container">
 								<div className="Post">
+									{/* {console.log(post)} */}
 									<h5>
 										{Post.map((User) => {
-											console.log(User.id);
 											if (User.id === post.UserId) {
-												return post.UserId;
+												return `${post.User.firstName} ${post.User.lastName}`;
 											}
 										})}
 									</h5>
@@ -69,10 +57,15 @@ const Post = ({ post }) => {
 											{post.title}{" "}
 											<FaTimes onClick={() => DeletePost(post.id)} />
 										</h2>
-										<div>
+										<div className="description">
 											{post.description}
-											<Button />
-											<AddComment />
+											<Button
+												onClick={() => setShowComments(!showComments)}
+												post={post}
+												text="comment"
+											/>
+											{/* {console.log(post.Comments)} */}
+											{showComments && <Comments post={post} />}
 										</div>
 									</div>
 								</div>
