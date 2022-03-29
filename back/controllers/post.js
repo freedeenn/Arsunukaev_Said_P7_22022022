@@ -61,14 +61,11 @@ exports.deletePost = (req, res) => {
 		console.log();
 		console.log("---------");
 		if (post.UserId === req.auth.userId || post.UserId.isAdmin === true) {
-			const filename = post.imageUrl.split("/images/")[1];
-			fs.unlink(`images/${filename}`, () => {
-				post
-					.destroy({ where: { id: req.params.id } })
-					.then(() =>
-						res.status(200).json({ message: `Post supprimé !${req.params.id}` })
-					);
-			});
+			post
+				.destroy({ where: { id: req.params.id } })
+				.then(() =>
+					res.status(200).json({ message: `Post supprimé !${req.params.id}` })
+				);
 		} else {
 			res.status(401).json({ message: "Impossible de supprimer le post" });
 		}

@@ -4,10 +4,10 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export default function Login() {
+	let navigate = useNavigate();
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [errorMessage, setErrorMessage] = useState("");
-	let navigate = useNavigate();
 
 	const handleLogin = (e) => {
 		e.preventDefault();
@@ -29,8 +29,7 @@ export default function Login() {
 					localStorage.setItem("userId", res.data.userId);
 					localStorage.setItem("userInfo", res.data.userInfo);
 					navigate("/");
-				} else {
-					console.log(res);
+					window.location.reload();
 				}
 			})
 			.catch((error) => {

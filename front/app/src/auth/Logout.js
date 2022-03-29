@@ -1,11 +1,13 @@
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 const LogOut = () => {
-	let navigate = useNavigate();
-	navigate("/");
-	localStorage.clear();
+	// let navigate = useNavigate();
 
-	return <input type="submit" value="LogOut" />;
+	localStorage.clear();
+	window.location.href = "http://localhost:3000";
+	// window.location.reload();
+	// navigate("/");
+	return <div></div>;
 };
 
 export default LogOut;

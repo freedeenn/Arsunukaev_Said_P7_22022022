@@ -29,7 +29,6 @@ const Post = ({ post }) => {
 			.get("http://localhost:4000/api/post", config)
 			.then((res) => {
 				setPost(res.data);
-				console.log();
 			})
 			.catch((error) => console.log(error));
 	}, []);
@@ -43,6 +42,7 @@ const Post = ({ post }) => {
 							<div className="Container">
 								<div className="Post">
 									<h5>
+										{/* {console.log(post.Comments)} */}
 										{post.User.firstName} {post.User.lastName}
 									</h5>
 									<div className="Image">
@@ -61,7 +61,7 @@ const Post = ({ post }) => {
 												text="comment"
 											/>
 											{/* {console.log(post.Comments)} */}
-											{showComments && <Comments post={post} />}
+											{showComments && <Comments post={post.id} />}
 										</div>
 									</div>
 								</div>

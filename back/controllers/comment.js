@@ -66,13 +66,8 @@ exports.getCommentsByPost = (req, res) => {
 };
 exports.getAllComments = (req, res) => {
 	db.Comment.findAll({
-		attributes: ["comment", "createdAt", "userId", "id", "postId", "updatedAt"],
-		include: [
-			{
-				model: db.User,
-				attributes: ["firstName", "lastName", "id"],
-			},
-		],
+		attributes: ["comment", "createdAt", "userId", "id", "postId"],
+		include: [db.User],
 	})
 		.then((comments) => {
 			res.status(200).json(comments);

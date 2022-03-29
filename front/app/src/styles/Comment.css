@@ -1,3 +1,6 @@
 #comment {
 	display: flex;
 }
+.right p {
+	text-align: end;
+}

@@ -7,10 +7,6 @@ module.exports = function (sequelize, DataTypes) {
 				type: DataTypes.TEXT,
 				allowNull: false,
 			},
-			// createdAt: {
-			// 	type: DataTypes.NOW,
-			// 	allowNull: true,
-			// },
 		},
 		{
 			sequelize,
