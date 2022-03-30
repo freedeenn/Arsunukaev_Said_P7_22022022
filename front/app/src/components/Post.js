@@ -20,10 +20,11 @@ const Post = ({ post }) => {
 		await axios.delete(`http://localhost:4000/api/post/delete/${id}`, config);
 
 		setPost(Post.filter((post) => post.id !== id));
+		console.log(id);
 	};
 	///////////////////////////////////////////////////////////
 
-	//REQUETTE GET//
+	//REQUETTE GET POSTS//
 	useEffect(() => {
 		axios
 			.get("http://localhost:4000/api/post", config)
@@ -49,10 +50,9 @@ const Post = ({ post }) => {
 										<img src={post.imageUrl} alt="" />
 									</div>
 									<div className="Content">
-										<h2>
-											{post.title}{" "}
-											<FaTimes onClick={() => DeletePost(post.id)} />
-										</h2>
+										<h2>{post.title} </h2>
+										<FaTimes onClick={() => DeletePost(post.id)} />
+
 										<div className="description">
 											{post.description}
 											<Button
@@ -61,7 +61,7 @@ const Post = ({ post }) => {
 												text="comment"
 											/>
 											{/* {console.log(post.Comments)} */}
-											{showComments && <Comments post={post.id} />}
+											{showComments && <Comments post={post} />}
 										</div>
 									</div>
 								</div>

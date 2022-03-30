@@ -8,6 +8,7 @@
 
 .Post {
 	width: 50%;
+	min-width: 350px;
 	height: auto;
 	border: solid 2px black;
 	align-items: center;
@@ -17,7 +18,6 @@
 .Image {
 	width: 100%;
 	height: 60%;
-	/* background-color: blue; */
 }
 img {
 	width: 100%;
@@ -28,29 +28,28 @@ img {
 .Content {
 	width: 100%;
 	height: 30%;
-	/* background-color: chartreuse; */
 }
 .description {
 	margin: 5px;
 }
-h2 {
+.Content h2 {
 	margin: 5px;
 }
+svg {
+	display: flex;
+	flex-direction: row;
+	margin-right: 5px;
+	padding: 5px;
+	margin-left: auto;
+	color: black;
+	text-align: right;
+}
 
-h2 svg {
+.Content svg {
+	display: flex;
+	flex-direction: row;
 	color: red;
 	cursor: pointer;
-	display: inline;
-	position: absolute;
-	right: 25.5%;
-}
-p svg {
-	color: green;
-	cursor: pointer;
-	display: inline;
-	position: absolute;
-	font-size: 20px;
-	right: 25.5%;
 }
 
 h5 {

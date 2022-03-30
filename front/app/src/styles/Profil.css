@@ -1,0 +1,10 @@
+.profil {
+	display: flex;
+	justify-content: center;
+}
+
+.content {
+	text-align: center;
+	font-size: 25px;
+	margin: 10px;
+}

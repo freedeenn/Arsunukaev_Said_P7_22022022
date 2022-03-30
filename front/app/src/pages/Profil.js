@@ -3,6 +3,7 @@ import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import "../styles/Profil.css";
 import Button from "../components/Button";
 import axios from "axios";
 // import { userIdContext } from "./AppContext";
@@ -13,7 +14,6 @@ const Profil = (e) => {
 	const userInfo = localStorage.getItem("userInfo");
 	const token = localStorage.getItem("token");
 	const userId = localStorage.getItem("userId");
-	console.log(userId);
 	const config = {
 		headers: {
 			"Content-Type": "multipart/form-data",
@@ -42,24 +42,31 @@ const Profil = (e) => {
 
 	//AFFICHAGE//
 	return (
-		<div className="profil">
+		<>
 			<NavBar />
-			{loggedIn ? (
-				<div className="profil">
-					<div className="content">
-						<h5>{userInfo}</h5>
-						<form action="" onSubmit={DeleteUser}>
-							<input type="submit" value="Delete Account" />
-						</form>
+			<div className="profil">
+				{loggedIn ? (
+					<div className="profil">
+						<div className="content">
+							<h5>{userInfo}</h5>
+							<form action="" onSubmit={DeleteUser}>
+								<input
+									id="submit-btn"
+									style={{ background: "#8B0000", margin: 10 }}
+									type="submit"
+									value="Delete Account"
+								/>
+							</form>
+						</div>
 					</div>
-				</div>
-			) : (
-				<div>
-					<Log />
-				</div>
-			)}
-			<Footer />
-		</div>
+				) : (
+					<div>
+						<Log />
+					</div>
+				)}
+				<Footer />
+			</div>
+		</>
 	);
 };
 export default Profil;
