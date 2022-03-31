@@ -64,7 +64,7 @@ const Post = ({ post }) => {
 											post={post}
 											text="comment"
 										/>
-										{showComments[] && <Comments post={post} />}
+										{showComments && <Comments post={post} />}
 									</div>
 								</div>
 							</div>

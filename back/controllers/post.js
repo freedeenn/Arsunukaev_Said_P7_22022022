@@ -24,7 +24,10 @@ exports.createPost = (req, res, next) => {
 
 /// AFFICHER TOUTES LES POSTS //
 exports.getAllPosts = (req, res, next) => {
-	db.Post.findAll({ include: [db.User, db.Comment] })
+	// db.Post.findAll({ include: [db.User, db.Comment]  })
+	db.Post.findAll({
+		include: [db.User, { model: db.Comment, include: db.User }],
+	})
 		.then((posts) => res.status(200).json(posts))
 		.catch((error) => res.status(400).json({ error }));
 };

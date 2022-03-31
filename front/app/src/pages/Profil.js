@@ -64,8 +64,8 @@ const Profil = (e) => {
 						<Log />
 					</div>
 				)}
-				<Footer />
 			</div>
+			<Footer />
 		</>
 	);
 };

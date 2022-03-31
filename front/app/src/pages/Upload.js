@@ -2,6 +2,7 @@ import "../styles/auth/Log.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../components/NavBar";
+import Footer from "../components/Footer";
 import axios from "axios";
 import Log from "./Log";
 
@@ -86,6 +87,7 @@ const Upload = () => {
 			) : (
 				<Log />
 			)}
+			<Footer />
 		</form>
 	);
 };

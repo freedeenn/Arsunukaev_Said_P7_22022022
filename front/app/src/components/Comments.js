@@ -4,6 +4,7 @@ import Comment from "./Comment";
 import { useEffect, useState, useCallback } from "react";
 import { FaTimes } from "react-icons/fa";
 import axios from "axios";
+import { NavLink } from "react-router-dom";
 
 const Comments = ({ post }) => {
 	const [comments, setComments] = useState("");
@@ -71,26 +72,20 @@ const Comments = ({ post }) => {
 		<div>
 			<div className="form-control">
 				<div className="form-comment">
-					{comments.length > 0
-						? comments.map((comment) => (
+					{Comments.length > 0
+						? post.Comments.map((comment) => (
 								// if (post.id === comment.postId) {
 								<div id="comment" key={comment.id} post={post.id}>
 									<h5>
 										<div>
-											<p>
-												{comment.User.firstName} {comment.User.lastName} :{" "}
-												{
-													(comment.comment,
-													(
-														<FaTimes
-															onClick={() => DeleteComment(comment.id)}
-														/>
-													))
-												}{" "}
-												{/* {<FaTimes onClick={() => DeleteComment(comment.id)} />} */}
-											</p>
-
-											<p className="right">{comment.createdAt}</p>
+											<div>
+												<div className="right">{comment.createdAt}</div>
+												<NavLink to="/profil">
+													{comment.User.firstName} {comment.User.lastName}
+												</NavLink>{" "}
+												: {comment.comment}{" "}
+												{<FaTimes onClick={() => DeleteComment(comment.id)} />}
+											</div>
 										</div>
 									</h5>
 								</div>
