@@ -1,6 +1,4 @@
-import Button from "./Button";
 import "../styles/Comments.css";
-import Comment from "./Comment";
 import { useEffect, useState, useCallback } from "react";
 import { FaTimes } from "react-icons/fa";
 import axios from "axios";
