@@ -58,9 +58,7 @@ const Post = ({ post, onToggle }) => {
 
 									<div className="description">
 										{post.description}
-										<p>{index}</p>
 										<Button
-											onClick={() => onToggle(post.id)}
 											post={post}
 											text="comment"
 											onClick={() => setShowComments(!showComments)}
