@@ -6,7 +6,7 @@ import Button from "./Button";
 import Comments from "./Comments";
 import { NavLink } from "react-router-dom";
 
-const Post = ({ post }) => {
+const Post = ({ post, onToggle }) => {
 	const [Post, setPost] = useState([]);
 	const [showComments, setShowComments] = useState(false);
 	const token = localStorage.getItem("token");
@@ -17,7 +17,7 @@ const Post = ({ post }) => {
 		},
 	};
 	//SUPPRIMER POST///////////////////////////////////////////
-	const DeletePost = async (id) => {
+	const deletePost = async (id) => {
 		await axios.delete(`http://localhost:4000/api/post/delete/${id}`, config);
 
 		setPost(Post.filter((post) => post.id !== id));
@@ -54,15 +54,16 @@ const Post = ({ post }) => {
 								</div>
 								<div className="Content">
 									<h2>{post.title} </h2>
-									<FaTimes onClick={() => DeletePost(post.id)} />
+									<FaTimes onClick={() => deletePost(post.id)} />
 
 									<div className="description">
 										{post.description}
 										<p>{index}</p>
 										<Button
-											onClick={() => setShowComments(!showComments)}
+											onClick={() => onToggle(post.id)}
 											post={post}
 											text="comment"
+											onClick={() => setShowComments(!showComments)}
 										/>
 										{showComments && <Comments post={post} />}
 									</div>

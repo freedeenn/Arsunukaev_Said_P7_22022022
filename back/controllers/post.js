@@ -5,6 +5,7 @@ const User = models.users;
 const Post = models.posts;
 const Comment = models.comments;
 const fs = require("fs");
+const jwt = require("jsonwebtoken");
 
 /// CREER LE POST ///
 exports.createPost = (req, res, next) => {
@@ -34,36 +35,24 @@ exports.getAllPosts = (req, res, next) => {
 
 /// AFFICHER UN POST //
 exports.getOnePost = (req, res, next) => {
-	db.Post.findOne({ _id: req.params.id, include: [db.User, db.Comment] }) // retrouver un élément par son id
+	db.Post.findOne({
+		_id: req.params.id,
+		include: [db.User, { model: db.Comment, include: db.User }],
+	}) // retrouver un élément par son id
 		.then((post) => res.status(200).json(post))
 		.catch((error) => res.status(404).json({ error }));
 };
 
-exports.modifyPost = (req, res, next) => {
-	const postObject = req.file
-		? {
-				...req.body.post,
-				imageUrl: `${req.protocol}://${req.get("host")}/images/${
-					req.file.filename
-				}`,
-		  }
-		: { ...req.body };
-
-	Post.update(
-		{ ...postObject, id: req.params.id },
-		{ where: { id: req.params.id } }
-	)
-		.then(() => res.status(200).json({ message: "Post modifié !" }))
-		.catch((error) => res.status(400).json({ error }));
-};
-
 /// SUPPRIMER UN POST //
 exports.deletePost = (req, res) => {
-	db.Post.findOne({ where: { id: req.params.id } }).then((post) => {
+	db.Post.findOne({
+		where: { id: req.params.id },
+		include: [db.User, { model: db.Comment, include: db.User }],
+	}).then((post) => {
 		console.log("---------");
-		console.log();
+		console.log(req.auth);
 		console.log("---------");
-		if (post.UserId === req.auth.userId || post.UserId.isAdmin === true) {
+		if (post.UserId === req.auth.UserId || post.User.isAdmin === true) {
 			post
 				.destroy({ where: { id: req.params.id } })
 				.then(() =>

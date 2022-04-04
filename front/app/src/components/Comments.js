@@ -6,7 +6,7 @@ import { FaTimes } from "react-icons/fa";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
 
-const Comments = ({ post }) => {
+const Comments = ({ post, onClick }) => {
 	const [comments, setComments] = useState("");
 	const [comment, setComment] = useState("");
 	const token = localStorage.getItem("token");
@@ -22,7 +22,7 @@ const Comments = ({ post }) => {
 	console.log(comments);
 
 	//SUPPRIMER POST///////////////////////////////////////////
-	const DeleteComment = async (id) => {
+	const deleteComment = async (id) => {
 		await axios.delete(
 			`http://localhost:4000/api/comment/delete/${id}`,
 			config
@@ -84,7 +84,7 @@ const Comments = ({ post }) => {
 													{comment.User.firstName} {comment.User.lastName}
 												</NavLink>{" "}
 												: {comment.comment}{" "}
-												{<FaTimes onClick={() => DeleteComment(comment.id)} />}
+												{<FaTimes onClick={() => deleteComment(comment.id)} />}
 											</div>
 										</div>
 									</h5>
