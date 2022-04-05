@@ -38,6 +38,7 @@ exports.signup = (req, res) => {
 								loggedIn: true,
 								userInfo: [user.firstName, user.lastName],
 								userId: user.id,
+								isAdmin: user.isAdmin,
 								message: "Inscription terminée avec succès. Connectez-vous.",
 							})
 						)
@@ -70,9 +71,13 @@ exports.login = (req, res) => {
 							message: "Email ou Mot de passe incorrect !",
 						});
 					}
-					const token = jwt.sign({ userId: user.id }, process.env.TOKEN_KEY, {
-						expiresIn: "24h",
-					});
+					const token = jwt.sign(
+						{ userId: user.id, isAdmin: user.isAdmin },
+						process.env.TOKEN_KEY,
+						{
+							expiresIn: "24h",
+						}
+					);
 					res.status(200).json({
 						loggedIn: true,
 						userInfo: [user.firstName, user.lastName],
@@ -102,9 +107,16 @@ exports.getOneUser = (req, res) => {
 
 // supprimer un utilisateur
 exports.deleteUser = (req, res) => {
+	const token = req.headers.authorization.split(" ")[1];
+	const decodedToken = jwt.verify(token, process.env.TOKEN_KEY);
+	const userId = decodedToken.userId;
+	const isAdmin = decodedToken.isAdmin;
 	db.User.findOne({ where: { id: req.params.id } })
 		.then((user) => {
-			if (user.id === req.auth.userId || user.isAdmin === true) {
+			console.log("---------");
+			console.log(isAdmin);
+			console.log("---------");
+			if (user.id === userId || isAdmin === true) {
 				user
 					.destroy({ where: { id: req.params.id } })
 					.then(() =>

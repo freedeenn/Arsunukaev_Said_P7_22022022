@@ -8,6 +8,7 @@ import { NavLink } from "react-router-dom";
 const Post = ({ post, onToggle }) => {
 	const [Post, setPost] = useState([]);
 	const token = localStorage.getItem("token");
+	const isAdmin = localStorage.getItem("isAdmin");
 	const config = {
 		headers: {
 			"Content-Type": "multipart/form-data",
@@ -16,7 +17,11 @@ const Post = ({ post, onToggle }) => {
 	};
 	//SUPPRIMER POST///////////////////////////////////////////
 	const deletePost = async (id) => {
-		await axios.delete(`http://localhost:4000/api/post/delete/${id}`, config);
+		await axios.delete(
+			`http://localhost:4000/api/post/delete/${id}`,
+			config,
+			isAdmin
+		);
 
 		setPost(Post.filter((post) => post.id !== id));
 		console.log(id);

@@ -45,11 +45,15 @@ exports.getOnePost = (req, res, next) => {
 
 /// SUPPRIMER UN POST //
 exports.deletePost = (req, res) => {
+	const token = req.headers.authorization.split(" ")[1];
+	const decodedToken = jwt.verify(token, process.env.TOKEN_KEY);
+	const userId = decodedToken.userId;
+	const isAdmin = decodedToken.isAdmin;
 	db.Post.findOne({
 		where: { id: req.params.id },
-		include: [db.User, { model: db.Comment, include: db.User }],
 	}).then((post) => {
-		if (post.UserId === req.auth.userId || post.User.isAdmin === true) {
+		console.log(isAdmin);
+		if (post.UserId === userId || isAdmin === true) {
 			post
 				.destroy({ where: { id: req.params.id } })
 				.then(() =>
