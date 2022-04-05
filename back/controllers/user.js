@@ -104,6 +104,9 @@ exports.getOneUser = (req, res) => {
 exports.deleteUser = (req, res) => {
 	db.User.findOne({ where: { id: req.params.id } })
 		.then((user) => {
+			console.log("---------");
+			console.log(req);
+			console.log("---------");
 			if (user.id === req.auth.userId || user.isAdmin === true) {
 				user
 					.destroy({ where: { id: req.params.id } })

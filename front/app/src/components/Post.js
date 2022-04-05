@@ -8,7 +8,6 @@ import { NavLink } from "react-router-dom";
 
 const Post = ({ post, onToggle }) => {
 	const [Post, setPost] = useState([]);
-	const [showComments, setShowComments] = useState(false);
 	const token = localStorage.getItem("token");
 	const config = {
 		headers: {
@@ -58,12 +57,7 @@ const Post = ({ post, onToggle }) => {
 
 									<div className="description">
 										{post.description}
-										<Button
-											post={post}
-											text="comment"
-											onClick={() => setShowComments(!showComments)}
-										/>
-										{showComments && <Comments post={post} />}
+										{<Comments post={post} />}
 									</div>
 								</div>
 							</div>

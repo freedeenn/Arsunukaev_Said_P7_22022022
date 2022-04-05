@@ -72,7 +72,6 @@ const Comments = ({ post, onClick }) => {
 				<div className="form-comment">
 					{Comments.length > 0
 						? post.Comments.map((comment) => (
-								// if (post.id === comment.postId) {
 								<div id="comment" key={comment.id} post={post.id}>
 									<h5>
 										<div>
@@ -87,7 +86,6 @@ const Comments = ({ post, onClick }) => {
 										</div>
 									</h5>
 								</div>
-								// }
 						  ))
 						: null}
 				</div>

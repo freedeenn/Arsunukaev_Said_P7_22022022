@@ -50,9 +50,9 @@ exports.deletePost = (req, res) => {
 		include: [db.User, { model: db.Comment, include: db.User }],
 	}).then((post) => {
 		console.log("---------");
-		console.log(req.auth);
+		console.log();
 		console.log("---------");
-		if (post.UserId === req.auth.UserId || post.User.isAdmin === true) {
+		if (post.UserId === req.auth.userId || post.User.isAdmin === true) {
 			post
 				.destroy({ where: { id: req.params.id } })
 				.then(() =>
