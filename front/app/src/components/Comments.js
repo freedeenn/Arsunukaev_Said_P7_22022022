@@ -17,7 +17,6 @@ const Comments = ({ post, onClick }) => {
 			Authorization: `Bearer ${token}`,
 		},
 	};
-	console.log(comments);
 
 	//SUPPRIMER POST///////////////////////////////////////////
 	const deleteComment = async (id) => {

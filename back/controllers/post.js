@@ -49,9 +49,6 @@ exports.deletePost = (req, res) => {
 		where: { id: req.params.id },
 		include: [db.User, { model: db.Comment, include: db.User }],
 	}).then((post) => {
-		console.log("---------");
-		console.log();
-		console.log("---------");
 		if (post.UserId === req.auth.userId || post.User.isAdmin === true) {
 			post
 				.destroy({ where: { id: req.params.id } })

@@ -26,9 +26,6 @@ exports.createComment = (req, res) => {
 // Suppression d'un commentaire
 exports.deleteComment = (req, res) => {
 	db.Comment.findOne({ where: { id: req.params.id } }).then((comment) => {
-		console.log("---------");
-		// console.log(comment.UserId.isAdmin);
-		console.log("---------");
 		if (comment.UserId === req.auth.userId || comment.UserId.isAdmin === true) {
 			comment.destroy({ where: { id: req.params.id } }).then(() => {
 				res.status(200).json({

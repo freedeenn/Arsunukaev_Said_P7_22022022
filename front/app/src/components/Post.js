@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import "../styles/Post.css";
 import axios from "axios";
 import { FaTimes } from "react-icons/fa";
-import Button from "./Button";
 import Comments from "./Comments";
 import { NavLink } from "react-router-dom";
 
