@@ -113,9 +113,6 @@ exports.deleteUser = (req, res) => {
 	const isAdmin = decodedToken.isAdmin;
 	db.User.findOne({ where: { id: req.params.id } })
 		.then((user) => {
-			console.log("---------");
-			console.log(isAdmin);
-			console.log("---------");
 			if (user.id === userId || isAdmin === true) {
 				user
 					.destroy({ where: { id: req.params.id } })

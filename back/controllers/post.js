@@ -52,7 +52,6 @@ exports.deletePost = (req, res) => {
 	db.Post.findOne({
 		where: { id: req.params.id },
 	}).then((post) => {
-		console.log(isAdmin);
 		if (post.UserId === userId || isAdmin === true) {
 			post
 				.destroy({ where: { id: req.params.id } })
